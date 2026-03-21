@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="周权, 武汉理工大学, 生活照片, Quan Zhou, photo gallery">
+    <meta name="description" content="Quan Zhou's personal photo album">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quan Zhou - Photo Gallery</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* 图片网格样式（保持与原风格协调） */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .photo-item {
+            background: #f8f9fa;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .photo-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+        .photo-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+        .photo-caption {
+            padding: 0.8rem 1rem;
+            text-align: center;
+            color: #2c3e50;
+            font-weight: 400;
+            background: white;
+        }
+        .section-subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-top: -1rem;
+            margin-bottom: 2rem;
+            font-weight: 300;
+            font-size: 1.1rem;
+        }
+        .navbar-placeholder {
+            height: 60px; /* 默认高度 */
+        }
+        @media (max-width: 768px) {
+        .navbar-placeholder {
+            height: 80px; /* 移动端可能更高 */
+        }
+}
+/* ---------- 模态框 (Lightbox) 样式 ---------- */
+.photo-item {
+    cursor: pointer;  /* 让图片显示可点击手势 */
+    will-change: transform; /* 提前告知浏览器可能会变换，优化性能 */
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.9);
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal.show {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-content {
+    max-width: 90vw;    /* 宽度不超过视口宽度的90% */
+    max-height: 90vh;   /* 高度不超过视口高度的90% */
+    object-fit: contain; /* 保持图片原始比例，完整显示 */
+    border-radius: 8px;
+    box-shadow: 0 5px 30px rgba(0,0,0,0.5);
+}
+
+.close {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    color: #f1f1f1;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s;
+    z-index: 1010;
+}
+
+.close:hover {
+    color: #bbb;
+}
+
+.modal-caption {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 1rem;
+    padding: 0.5rem;
+    background: rgba(0,0,0,0.5);
+    margin: 0;
+    pointer-events: none;
+}
+    </style>
+</head>
+<body>
+    <!-- 导航栏（链接指向主页各板块，方便返回） -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="myhtml.html" class="logo">Quan Zhou</a>
+            <ul class="nav-links">
+                <li><a href="myhtml.html#about">ABOUT</a></li>
+                <li><a href="myhtml.html#news">NEWS</a></li>
+                <li><a href="myhtml.html#activities">ACTIVITIES</a></li>
+                <li><a href="myhtml.html#publications">PUBLICATIONS</a></li>
+                <li><a href="myhtml.html#students">STUDENTS</a></li>
+                <li><a href="myhtml.html#contact">CONTACT</a></li>
+                <li><a href="photo.html" style="color: #3498db; font-weight: 600;">PHOTO</a></li>
+            </ul>
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+        <!-- 占位元素，保持页面结构完整 -->
+        <div class="navbar-placeholder"></div>
+    <!-- 相册主内容 -->
+    <section class="section" style="padding-top: 3rem;">
+        <div class="container">
+            <h2 class="section-title">Life Moments</h2>
+            <p class="section-subtitle">Some snapshots from daily life and travels</p>
+            <div class="photo-grid">
+                <!-- 图片项（使用在线占位图，请替换为您的实际照片） -->
+                <div class="photo-item">
+                    <img src="/photo/20.jpg" alt="生活照1" loading="lazy">
+                    <div class="photo-caption">周权</div>
+                </div>
+                <div class="photo-item">
+                    <img src="/photo/3.jpg" alt="生活照2" loading="lazy">
+                    <div class="photo-caption">周权和少卿</div>
+                </div>
+                <div class="photo-item">
+                    <img src="/photo/19.jpg" alt="生活照3" loading="lazy">
+                    <div class="photo-caption">实验室团队聚会</div>
+                </div>
+                <div class="photo-item">
+                    <img src="/photo/4.jpg" alt="生活照4" loading="lazy">
+                    <div class="photo-caption">罗敢帅照1</div>
+                </div>
+                <div class="photo-item">
+                    <img src="/photo/16.png " alt="生活照5" loading="lazy">
+                    <div class="photo-caption">罗敢帅照2</div>
+                </div>
+                <div class="photo-item">
+                    <img src="/photo/1.jpg" alt="生活照6" loading="lazy">
+                    <div class="photo-caption">翟少卿</div>
+                </div>
+                <div class="photo-item">
+                    <img src="/photo/17.jpg" alt="生活照7" loading="lazy">
+                    <div class="photo-caption">毛力喝多咯</div>
+                </div>
+                <div class="photo-item">
+                    <img src="/photo/21.jpg" alt="生活照9" loading="lazy">
+                    <div class="photo-caption">沈浪</div>
+                </div>
+                <div class="photo-item">
+                    <img src="/photo/22.png" alt="生活照10" loading="lazy">
+                    <div class="photo-caption">沈浪</div>
+                </div>   
+                <div class="photo-item">
+                    <img src="/photo/24.jpg" alt="生活照6" loading="lazy">
+                    <div class="photo-caption">成浩男</div>
+                </div>
+                 <div class="photo-item">
+                    <img src="/photo/5.jpg" alt="生活照11" loading="lazy">
+                    <div class="photo-caption">洱海</div>
+                </div>      
+                <div class="photo-item">
+                    <img src="/photo/6.jpg" alt="生活照12" loading="lazy">
+                    <div class="photo-caption">洱海</div>
+                </div>   
+                <div class="photo-item">
+                    <img src="/photo/7.jpg" alt="生活照13" loading="lazy">
+                    <div class="photo-caption">洱海</div>
+                </div>   
+                <div class="photo-item">
+                    <img src="/photo/8.jpg" alt="生活照14" loading="lazy">
+                    <div class="photo-caption">樱花</div>
+                </div>   
+                <div class="photo-item">
+                    <img src="/photo/9.jpg" alt="生活照15" loading="lazy">
+                    <div class="photo-caption">梅凯</div>
+                </div>   
+                <div class="photo-item">
+                    <img src="/photo/10.jpg" alt="生活照16" loading="lazy">
+                    <div class="photo-caption">刘鑫</div>
+                </div>   
+                <div class="photo-item">
+                    <img src="/photo/11.jpg" alt="生活照17" loading="lazy">
+                    <div class="photo-caption">嘉宇，罗敢，刘鑫，亚伦</div>
+                </div>   
+                <div class="photo-item">
+                    <img src="/photo/12.jpg" alt="生活照18" loading="lazy">
+                    <div class="photo-caption">嘉宇</div>
+                </div>   
+                <div class="photo-item">
+                    <img src="/photo/13.jpg" alt="生活照19" loading="lazy">
+                    <div class="photo-caption">苏义鑫老师</div>
+                </div>   
+                <div class="photo-item">
+                    <img src="/photo/23.jpg" alt="生活照22" loading="lazy">
+                    <div class="photo-caption">田猛老师</div>
+                </div>   
+                <div class="photo-item">
+                    <img src="/photo/22.jpg" alt="生活照22" loading="lazy">
+                    <div class="photo-caption">董政呈老师</div>
+                </div>   
+                <div class="photo-item">
+                    <img src="/photo/14.jpg" alt="生活照20" loading="lazy">
+                    <div class="photo-caption">猫</div>
+                </div>   
+                <div class="photo-item">
+                    <img src="/photo/15.jpg" alt="生活照21" loading="lazy">
+                    <div class="photo-caption">侄女-喜欢巧虎</div>
+                </div>   
+                <div class="photo-item">
+                    <img src="/photo/18.jpg" alt="生活照22" loading="lazy">
+                    <div class="photo-caption">酒精</div>
+                </div>   
+  
+                <!-- 可继续添加更多图片 -->
+            </div>
+        </div>
+    </section>
+
+    <!-- 模态框 (Lightbox) -->
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div id="modalCaption" class="modal-caption"></div>
+    </div>
+
+    <!-- 页脚（与原主页一致） -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; <span id="currentDate"></span> Quan Zhou</p>
+            <p class="footer-links">
+                <a href="#"><i class="fab fa-google-scholar"></i> Google Scholar</a> |
+                <a href="#"><i class="fab fa-github"></i> GitHub</a> |
+                <a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a>
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // 自动更新页脚年份
+        document.getElementById('currentDate').textContent = new Date().getFullYear();
+        // ---------- 模态框交互 ----------
+       // 获取元素
+       const modal = document.getElementById('imageModal');
+       const modalImg = document.getElementById('modalImage');
+       const modalCaption = document.getElementById('modalCaption');
+       const closeBtn = document.querySelector('.close');
+
+       // 获取所有图片项
+       const photoItems = document.querySelectorAll('.photo-item');
+
+       // 为每个图片添加点击事件
+       photoItems.forEach(item => {
+       item.addEventListener('click', function() {
+             const img = this.querySelector('img');
+             const caption = this.querySelector('.photo-caption').innerText;
+             modal.style.display = 'flex';
+             setTimeout(() => modal.classList.add('show'), 10); // 触发过渡动画
+             modalImg.src = img.src;
+             modalCaption.innerText = caption;
+               });
+        });
+
+       // 关闭模态框的函数
+       function closeModal() {
+       modal.classList.remove('show');
+       setTimeout(() => {
+             modal.style.display = 'none';
+                        }, 300); // 等待过渡完成
+         }
+
+       // 点击关闭按钮
+       closeBtn.addEventListener('click', closeModal);
+
+       // 点击模态框背景（遮罩）关闭
+       modal.addEventListener('click', function(e) {
+       if (e.target === modal) {
+               closeModal();
+        }
+        });
+
+       // 键盘 ESC 键关闭
+       document.addEventListener('keydown', function(e) {
+         if (e.key === 'Escape' && modal.classList.contains('show')) {
+           closeModal();
+        }
+        });
+    </script>
+</body>
+</html>
